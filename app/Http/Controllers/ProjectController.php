@@ -15,7 +15,15 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return Project::all();
+        
+
+        $project = Project::paginate(
+            10, 
+            ['*'], 
+            'page', 
+        );
+        return response()->json(['project'=>$project],200);
+
     }
 
     /**
@@ -72,4 +80,9 @@ class ProjectController extends Controller
     {
         return project::destroy($id);
     }
+public function Query($name)
+    {
+        return Project::where('username', 'like', '%'.$name.'%')->get();
+    }
+
 }
